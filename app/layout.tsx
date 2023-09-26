@@ -2,7 +2,9 @@ import { Nunito } from 'next/font/google'
 
 import './globals.css'
 import Navbar from './components/navbar/Navbar';
-import Search from './components/navbar/Search';
+import ClientOnly from './components/ClientOnly';
+import RegisterModal from './components/modals/RegisterModal';
+import ToasterProvider from './providers/ToasterProvider';
 
 export const metadata = {
   title: 'reservation test app',
@@ -21,8 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar />
-        <Search />
+        <ClientOnly>
+          <ToasterProvider />
+          <RegisterModal />
+          {/* <Modal title="hello" actionLabel='Submit' isOpen={true} /> */}
+          <Navbar />
+        </ClientOnly>
+        
         {children}
       </body>
     </html>
