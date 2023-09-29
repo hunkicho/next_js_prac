@@ -16,7 +16,7 @@ const Avatar: React.FC<AvatarProps> = ({
             height="30"
             width="30"
             alt="Avatar"
-            src={src || "next.svg"}
+            src={src || "/images/sample.svg"}
         />
     );
 }
