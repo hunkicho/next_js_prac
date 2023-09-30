@@ -51,7 +51,17 @@ const UserMenu:React.FC<UserMenuProps> = ({
         }
 
         rentModal.onOpen();
-    }, [currentUser, loginModal, rentModal])
+    }, [currentUser, loginModal, rentModal]);
+
+    const openMyTrip = () => {
+        toggleOpen();
+        router.push('/trips');
+    }
+
+    const openMyReservation = () => {
+        toggleOpen();
+        router.push('/reservations');
+    }
 
     return (
         <div className="relative">
@@ -116,7 +126,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                         {currentUser ? (
                             <>
                             <MenuItem
-                                onClick={() => router.push('/trips')}
+                                onClick={openMyTrip}
                                 label='My trips'
                             />
                             <MenuItem
@@ -124,7 +134,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                                 label='My favorites'
                             />
                             <MenuItem
-                                onClick={() => {}}
+                                onClick={openMyReservation}
                                 label='My reservation'
                             />
                             <MenuItem

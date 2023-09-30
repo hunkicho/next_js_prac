@@ -52,6 +52,7 @@ const RegisterModal = () => {
         .then((response) => {
             if (response.ok) {
                 registerModal.onClose();
+                loginModal.onOpen();
             } else {
                 toast.error('Something error');
             }

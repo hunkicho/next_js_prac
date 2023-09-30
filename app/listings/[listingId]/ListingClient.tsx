@@ -50,6 +50,11 @@ const ListingClient: React.FC<ListingClientProps> = ({
         return dates;
     }, [reservations]);
 
+    const compareDateYMD = (date1: any, date2: any) => {
+        return date1.getFullYear().toString() + date1.getMonth().toString() + date1.getDate().toString() ===
+               date2.getFullYear().toString() + date2.getMonth().toString() + date2.getDate().toString();
+    }
+
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
     const [dateRange, setDateRange] = useState<Range>(initialDateRange);
@@ -77,11 +82,13 @@ const ListingClient: React.FC<ListingClientProps> = ({
         .then((response) => {
             if (response.status == 201) {
                 toast.success('Listing reserved!');
+                setDateRange(initialDateRange);
+                router.push('/trips');
+                router.refresh();
             } else {
                 toast.error('Something error');
             }
-            setDateRange(initialDateRange);
-            router.push('/trips');
+            
         })
         .catch((error) => {
             console.log(error);
@@ -103,8 +110,26 @@ const ListingClient: React.FC<ListingClientProps> = ({
             } else {
                 setTotalPrice(listing.price);
             }
+            
+            let found = false;
+            
+            for (const date of disasbledDates) {
+                if (
+                    compareDateYMD(date, dateRange.startDate) || compareDateYMD(date, dateRange.endDate)
+                ) {
+                    found = true;
+                    setIsLoading(true);
+                    break;
+                }
+            }
+            
+            if (!found) {
+                setIsLoading(false);
+            }
         }
-    }, [listing.price, dateRange]);
+
+        
+    }, [listing.price, dateRange, disasbledDates]);
 
     const category = useMemo(() => {
         return categories.find((item) =>
