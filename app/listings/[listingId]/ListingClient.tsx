@@ -6,8 +6,7 @@ import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import { categories } from "@/app/components/navbar/Categories";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import { SafeUser, safeListing } from "@/app/types";
-import { Reservation } from "@prisma/client";
+import { SafeReservation, SafeUser, safeListing } from "@/app/types";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -21,7 +20,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-    reservations?: Reservation[];
+    reservations?: SafeReservation[];
     listing: safeListing & {
         user: SafeUser
     };
@@ -62,7 +61,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
         setIsLoading(true);
 
-        await fetch('/api/reservation', {
+        await fetch('/api/reservations', {
             method: 'POST',
             cache: 'no-store',
             headers: {
