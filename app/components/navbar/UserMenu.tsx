@@ -68,6 +68,11 @@ const UserMenu:React.FC<UserMenuProps> = ({
         router.push('/favorites');
     }
 
+    const openMyProperty = () => {
+        toggleOpen();
+        router.push('/properties');
+    }
+
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
@@ -143,7 +148,7 @@ const UserMenu:React.FC<UserMenuProps> = ({
                                 label='My reservation'
                             />
                             <MenuItem
-                                onClick={() => {}}
+                                onClick={openMyProperty}
                                 label='My properties'
                             />
                             <MenuItem
